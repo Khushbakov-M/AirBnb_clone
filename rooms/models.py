@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from PIL import Image
 
 class Room(models.Model):
     class Meta:
@@ -33,6 +35,14 @@ class Photo(models.Model):
         "rooms.Room", related_name="photos", on_delete=models.CASCADE
     )
     caption = models.CharField(max_length=140)
+
+    def clean(self):
+        if self.file:
+            try:
+                # Open the image file to check its validity
+                img = Image.open(self.file)
+            except Exception as e:
+                raise ValidationError("Invalid file: Please upload a valid image file.")
 
     def __str__(self):
         return self.room.name
