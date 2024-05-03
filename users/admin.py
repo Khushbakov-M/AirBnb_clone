@@ -7,7 +7,7 @@ from . import models
 class UserAdmin(UserAdmin):
 
     fieldsets = UserAdmin.fieldsets + (
-        ("Custom Profile", {"fields": ("avatar", "superhost", "favs",)},),
+        ("Custom Profile", {"fields": ("avatar", "superhost", "favs", "position",)},),
     )
 
     filter_horizontal = ("favs",)
